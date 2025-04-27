@@ -9,6 +9,8 @@ paths:
     post:
       summary: Append new memory entry into Living Memory
       operationId: appendMemoryEntry
+      security:
+        - apiKeyAuth: []
       requestBody:
         required: true
         content:
@@ -36,3 +38,9 @@ paths:
           description: Forbidden (wrong API key)
         '500':
           description: Server error
+components:
+  securitySchemes:
+    apiKeyAuth:
+      type: apiKey
+      in: header
+      name: x-api-key
