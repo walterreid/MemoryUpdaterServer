@@ -44,6 +44,7 @@ app.post('/update-memory', async (req, res) => {
 });
 
 const fetchFileFromGithub = async (path) => {
+  console.log('Memory fetcher version: GitHub API method active ');
   const url = `https://api.github.com/repos/${REPO_OWNER}/${MEMORY_REPO_NAME}/contents/${path}`;
   const response = await axios.get(url, {
     headers: {
