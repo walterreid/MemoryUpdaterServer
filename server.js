@@ -43,13 +43,17 @@ app.post('/update-memory', async (req, res) => {
   }
 });
 
-// === New GET routes: Fetch files live from GitHub ===
 const fetchFileFromGithub = async (path) => {
-  const nocache = Date.now(); // simple timestamp for cache busting
-  const url = `https://raw.githubusercontent.com/${REPO_OWNER}/${MEMORY_REPO_NAME}/main/${path}?nocache=${nocache}`;
-  const response = await axios.get(url, { headers: { 'Cache-Control': 'no-cache' } });
+  const url = `https://api.github.com/repos/${REPO_OWNER}/${MEMORY_REPO_NAME}/contents/${path}`;
+  const response = await axios.get(url, {
+    headers: {
+      Authorization: `token ${GITHUB_TOKEN}`, // your GitHub personal access token
+      Accept: 'application/vnd.github.v3.raw' // get pure file text
+    }
+  });
   return response.data;
 };
+
 
 app.get('/system_prompt', async (req, res) => {
   try {
