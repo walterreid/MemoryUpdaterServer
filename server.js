@@ -45,8 +45,9 @@ app.post('/update-memory', async (req, res) => {
 
 // === New GET routes: Fetch files live from GitHub ===
 const fetchFileFromGithub = async (path) => {
-  const url = `https://raw.githubusercontent.com/${REPO_OWNER}/${MEMORY_REPO_NAME}/main/${path}`;
-  const response = await axios.get(url);
+  const nocache = Date.now(); // simple timestamp for cache busting
+  const url = `https://raw.githubusercontent.com/${REPO_OWNER}/${MEMORY_REPO_NAME}/main/${path}?nocache=${nocache}`;
+  const response = await axios.get(url, { headers: { 'Cache-Control': 'no-cache' } });
   return response.data;
 };
 
