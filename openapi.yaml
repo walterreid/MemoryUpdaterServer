@@ -1,0 +1,38 @@
+openapi: 3.0.0
+info:
+  title: Memory Updater API
+  version: 1.0.0
+servers:
+  - url: https://memory-updater-server.vercel.app
+paths:
+  /update-memory:
+    post:
+      summary: Append new memory entry into Living Memory
+      operationId: appendMemoryEntry
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                version:
+                  type: string
+                bodyText:
+                  type: string
+                commitMessage:
+                  type: string
+              required:
+                - title
+                - version
+                - bodyText
+                - commitMessage
+      responses:
+        '200':
+          description: Successful memory update dispatch
+        '403':
+          description: Forbidden (wrong API key)
+        '500':
+          description: Server error
